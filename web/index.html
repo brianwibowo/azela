@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Azela Bakery &amp; Pastry - Sistem Informasi Akuntansi</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- Halaman Masuk (MASUK APK) -->
+  <section id="login-screen" class="login-screen">
+    <div class="login-card">
+      <div class="login-brand">
+        <div>
+          <div class="login-logo-box">
+            <img id="login-logo" src="assets/logo.png" alt="Logo Azela Bakery &amp; Pastry">
+          </div>
+          <h1 style="margin-top: 20px;">AZELA BAKERY &amp; PASTRY</h1>
+          <p>Sistem Informasi Akuntansi desktop untuk pencatatan transaksi harian, neraca saldo, dan laporan laba rugi.</p>
+        </div>
+        <div class="login-meta">
+          Database SQLite lokal aktif otomatis di folder aplikasi.
+        </div>
+      </div>
+
+      <div class="login-form-wrap">
+        <h2>Masuk Aplikasi</h2>
+        <p class="login-subtitle">Silakan masukkan username dan password pengelola.</p>
+
+        <div id="login-error" class="alert alert-error hidden" role="alert"></div>
+
+        <form id="login-form">
+          <div class="field-group">
+            <label for="login-username">Username</label>
+            <input id="login-username" class="input" type="text" autocomplete="username" placeholder="Masukkan username" required>
+          </div>
+          <div class="field-group">
+            <label for="login-password">Password</label>
+            <input id="login-password" class="input" type="password" autocomplete="current-password" placeholder="Masukkan password" required>
+          </div>
+          <button id="login-submit" type="submit" class="btn btn-primary" style="width: 100%; margin-top: 6px;">
+            Masuk ke Dashboard
+          </button>
+        </form>
+
+        <div class="demo-hint">
+          Akun bawaan presentasi: <strong>admin</strong> / <strong>admin123</strong>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Shell Utama Aplikasi -->
+  <div id="app-shell" class="app-shell hidden">
+    <aside id="sidebar" class="sidebar" aria-label="Menu Utama">
+      <div>
+        <div class="sidebar-brand">
+          <img id="sidebar-logo" class="sidebar-logo" src="assets/logo.png" alt="Logo Azela">
+          <div>
+            <div class="sidebar-title">AZELA BAKERY</div>
+            <div class="sidebar-sub">SIA Kelompok 2</div>
+          </div>
+        </div>
+
+        <ul class="nav-list">
+          <li><button type="button" class="nav-btn" data-view="dashboard">Dashboard</button></li>
+          <li><button type="button" class="nav-btn" data-view="akun">Daftar Akun</button></li>
+          <li><button type="button" class="nav-btn" data-view="pembelian">Pembelian</button></li>
+          <li><button type="button" class="nav-btn" data-view="penjualan">Penjualan</button></li>
+          <li><button type="button" class="nav-btn" data-view="transaksi_lainnya">Transaksi Lainnya</button></li>
+          <li><button type="button" class="nav-btn" data-view="neraca_saldo">Neraca Saldo</button></li>
+          <li><button type="button" class="nav-btn" data-view="laba_rugi">Laba Rugi</button></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-footer">
+        <div class="user-pill">
+          <strong id="active-user-name">Admin Azela Bakery</strong>
+          <span>Database SQLite Lokal</span>
+        </div>
+        <button id="btn-reset-demo" type="button" class="sidebar-action-btn">Reset Data Demo</button>
+        <button id="btn-logout" type="button" class="sidebar-action-btn">Keluar</button>
+      </div>
+    </aside>
+
+    <div class="main-area">
+      <header class="topbar">
+        <div class="topbar-left">
+          <button id="btn-mobile-menu" type="button" class="mobile-menu-btn" aria-label="Buka menu navigasi">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+          </button>
+          <div>
+            <h1 id="page-title" class="page-heading">AZELA BAKERY &amp; PASTRY</h1>
+            <p id="page-caption" class="page-caption">Ringkasan pembukuan dan akses modul akuntansi</p>
+          </div>
+        </div>
+        <div id="topbar-actions" class="topbar-actions"></div>
+      </header>
+
+      <main id="view-root" class="content-wrap" aria-live="polite"></main>
+    </div>
+  </div>
+
+  <!-- Modal Konfirmasi -->
+  <div id="confirm-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="confirm-title">
+    <div class="modal-card">
+      <h3 id="confirm-title">Konfirmasi</h3>
+      <p id="confirm-message">Lanjutkan tindakan ini?</p>
+      <div class="modal-actions">
+        <button id="confirm-cancel" type="button" class="btn btn-secondary">Batal</button>
+        <button id="confirm-ok" type="button" class="btn btn-primary">Ya, Lanjutkan</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Edit Akun -->
+  <div id="edit-akun-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="edit-akun-title">
+    <div class="modal-card">
+      <h3 id="edit-akun-title">Ubah Data Akun</h3>
+      <form id="edit-akun-form">
+        <div class="field-group">
+          <label for="edit-no-akun">No. Akun</label>
+          <input id="edit-no-akun" class="input" type="text" readonly>
+        </div>
+        <div class="field-group">
+          <label for="edit-nama-akun">Nama Akun</label>
+          <input id="edit-nama-akun" class="input" type="text" required>
+        </div>
+        <div class="field-group">
+          <label for="edit-saldo-normal">Saldo Normal</label>
+          <select id="edit-saldo-normal" class="select">
+            <option value="Db">Db (Debit)</option>
+            <option value="Kr">Kr (Kredit)</option>
+          </select>
+        </div>
+        <div class="modal-actions">
+          <button id="edit-akun-cancel" type="button" class="btn btn-secondary">Batal</button>
+          <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="toast" class="toast hidden" role="status"></div>
+
+  <script src="js/format.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
+

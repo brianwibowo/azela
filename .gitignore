@@ -1,0 +1,9 @@
+.venv/
+__pycache__/
+*.pyc
+azela.db
+dist/
+build/
+*.spec
+exports/
+.DS_Store
